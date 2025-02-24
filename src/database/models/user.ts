@@ -2,8 +2,6 @@
 
 import { DataTypes, Model } from "sequelize";
 import sequelizeConnection from "../connection";
-import Event from "./events";
-import UserEvent from "./user-event";
 
 interface UserAttributes {
   firstName: string;
@@ -67,40 +65,5 @@ User.init({
   sequelize: sequelizeConnection,
   modelName: 'User',
 });
-
-// User.hasOne(Event);
-// Event.belongsTo(User, {
-//   foreignKey: 'ownerId'
-// });
-// class A extends Model {
-//   public id!: number;
-// }
-// A.init({
-//   id: {
-//     autoIncrement: true,
-//     primaryKey: true,
-//     type: DataTypes.NUMBER
-//   }
-// },{
-//   sequelize: sequelizeConnection,
-//   modelName: 'A'
-// });
-
-// class B extends Model {
-//   public id!: number;
-// }
-// B.init({
-//   id: {
-//     autoIncrement: true,
-//     primaryKey: true,
-//     type: DataTypes.NUMBER
-//   }
-// },{
-//   sequelize: sequelizeConnection,
-//   modelName: 'B'
-// });
-// A.belongsToMany(B, {
-//   through: 'C'
-// });
 
 export default User;

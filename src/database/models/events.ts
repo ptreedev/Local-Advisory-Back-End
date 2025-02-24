@@ -1,16 +1,16 @@
 'use strict';
-import { DataTypes, Model } from "sequelize";
+import { BelongsToManyAddAssociationMixin, DataTypes, Model, NonAttribute } from "sequelize";
 import sequelizeConnection from "../connection";
-
+import User from "./user";
 
 interface EventAttributes {
   name: string;
   description: string;
   dateFrom: Date;
   timeStart: Date;
-  
+
   timeEnd?: Date;
-  dateTo?: Date; 
+  dateTo?: Date;
   image?: string;
   id?: number;
   locationId?: number;
@@ -34,51 +34,46 @@ class Event extends Model<EventAttributes> implements EventAttributes {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-}
-  Event.init({
-    id: {
-      allowNull: false,
-      autoIncrement: true,
-      primaryKey: true,
-      type: DataTypes.NUMBER
-    }, 
-    name: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    description: {
-      allowNull: false,
-      type: DataTypes.STRING
-    },
-    dateFrom: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    timeStart: {
-      allowNull: false,
-      type: DataTypes.DATE
-    },
-    ownerId: {
-      allowNull: false,
-      type: DataTypes.NUMBER
-    },
-    locationId: {
-      allowNull: false,
-      type: DataTypes.NUMBER
-    }
 
-  }, {
-    sequelize: sequelizeConnection,
-    modelName: 'Event',
-  });
-// User.hasOne(Event); 
-// Event.belongsTo(User, {
-//   foreignKey: 'ownerId'
-// });
-// Location.hasMany(Event);
-// Event.belongsTo(Location);
-// Event.belongsToMany(User, {
-//   through: "UserEvent",
-//   as: "users"
-// })  
+  declare attendees?: NonAttribute<User[]>;
+  declare addAttendee: BelongsToManyAddAssociationMixin<User, User['id']>;
+
+}
+Event.init({
+  id: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.NUMBER
+  },
+  name: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  description: {
+    allowNull: false,
+    type: DataTypes.STRING
+  },
+  dateFrom: {
+    allowNull: false,
+    type: DataTypes.DATE
+  },
+  timeStart: {
+    allowNull: false,
+    type: DataTypes.DATE
+  },
+  ownerId: {
+    allowNull: false,
+    type: DataTypes.NUMBER
+  },
+  locationId: {
+    allowNull: false,
+    type: DataTypes.NUMBER
+  }
+
+}, {
+  sequelize: sequelizeConnection,
+  modelName: 'Event',
+});
+
 export default Event
