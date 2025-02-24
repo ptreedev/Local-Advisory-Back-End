@@ -3,6 +3,8 @@ import User from "./database/models/user";
 import { PORT } from "./configs";
 import Event from "./database/models/events";
 import Location from "./database/models/location"
+import './database/models';
+
 const server = Express();
 const port = PORT || 8080;
 server.get("/", async (req, res) => {
@@ -28,10 +30,12 @@ server.get("/", async (req, res) => {
         timeStart: new Date(),
         locationId: location.id,
     });
+    event.addAttendee(user);
     res.send(await Event.findOne({
         where: {
-            locationId: 1
-        }, include: Location 
+            id: event.id
+        },
+        include: [Location, 'attendees']
     }))
 })
 server.listen(port, () => {
