@@ -39,7 +39,7 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-
+// trying to associate with this function, I think the solution could be something to do with the above code but I don't understand
 helper(sequelize);
 
 module.exports = db;

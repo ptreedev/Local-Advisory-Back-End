@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-
+// added all associations to this file
 const helper = (sequelize: Sequelize): void => {
     const {Location, User, Event} = sequelize.models;
 
