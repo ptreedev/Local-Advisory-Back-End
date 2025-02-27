@@ -1,7 +1,13 @@
-'use strict';
-import { BelongsToManyAddAssociationMixin, DataTypes, Model, NonAttribute } from "sequelize";
+"use strict";
+import {
+  BelongsToManyAddAssociationMixin,
+  DataTypes,
+  Model,
+  NonAttribute,
+} from "sequelize";
 import sequelizeConnection from "../connection";
 import User from "./user";
+import Category from "./category";
 
 interface EventAttributes {
   name: string;
@@ -36,44 +42,50 @@ class Event extends Model<EventAttributes> implements EventAttributes {
   public readonly updatedAt!: Date;
 
   declare attendees?: NonAttribute<User[]>;
-  declare addAttendee: BelongsToManyAddAssociationMixin<User, User['id']>;
-
+  declare addAttendee: BelongsToManyAddAssociationMixin<User, User["id"]>;
+  declare category?: NonAttribute<Category[]>;
+  declare addCategory: BelongsToManyAddAssociationMixin<
+    Category,
+    Category["id"]
+  >;
 }
-Event.init({
-  id: {
-    allowNull: false,
-    autoIncrement: true,
-    primaryKey: true,
-    type: DataTypes.NUMBER
+Event.init(
+  {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.NUMBER,
+    },
+    name: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    description: {
+      allowNull: false,
+      type: DataTypes.STRING,
+    },
+    dateFrom: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    timeStart: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    ownerId: {
+      allowNull: false,
+      type: DataTypes.NUMBER,
+    },
+    locationId: {
+      allowNull: false,
+      type: DataTypes.NUMBER,
+    },
   },
-  name: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  description: {
-    allowNull: false,
-    type: DataTypes.STRING
-  },
-  dateFrom: {
-    allowNull: false,
-    type: DataTypes.DATE
-  },
-  timeStart: {
-    allowNull: false,
-    type: DataTypes.DATE
-  },
-  ownerId: {
-    allowNull: false,
-    type: DataTypes.NUMBER
-  },
-  locationId: {
-    allowNull: false,
-    type: DataTypes.NUMBER
+  {
+    sequelize: sequelizeConnection,
+    modelName: "Event",
   }
+);
 
-}, {
-  sequelize: sequelizeConnection,
-  modelName: 'Event',
-});
-
-export default Event
+export default Event;
