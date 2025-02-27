@@ -23,7 +23,7 @@ server.get("/", async (req, res) => {
     postCode: "M1 2TB",
     county: "Greater Manchester",
   });
-  const category = await Category.create({
+  const music = await Category.create({
     name: "Music",
   });
   const event = await Event.create({
@@ -34,8 +34,8 @@ server.get("/", async (req, res) => {
     timeStart: new Date(),
     locationId: location.id,
   });
-  event.addAttendee(user);
-  event.addCategory(category);
+  await event.addAttendee(user);
+  await event.addCategory(music);
   res.send(
     await Event.findOne({
       where: {
