@@ -1,14 +1,14 @@
 import Express from "express";
 import User from "./database/models/user";
-import { PORT } from "./configs";
+
 import Event from "./database/models/events";
 import Location from "./database/models/location";
 import "./database/models";
 import Category from "./database/models/category";
 
-const server = Express();
-const port = PORT || 8080;
-server.get("/", async (req, res) => {
+const app = Express();
+
+app.get("/", async (req, res) => {
   const user = await User.create({
     firstName: "John",
     lastName: "Smith",
@@ -45,6 +45,5 @@ server.get("/", async (req, res) => {
     })
   );
 });
-server.listen(port, () => {
-  console.log(`Server is listeing on ${port}`);
-});
+
+export { app };

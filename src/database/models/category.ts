@@ -1,6 +1,6 @@
 "use strict";
 import { DataTypes, Model } from "sequelize";
-import sequelizeConnection from "../connection";
+import { sequelizeConnection } from "../connection";
 
 interface CategoryAttributes {
   name: string;

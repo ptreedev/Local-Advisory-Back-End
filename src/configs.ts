@@ -1,13 +1,15 @@
-import dotenv from "dotenv" 
+import dotenv from "dotenv";
 dotenv.config({
-    path: "./env"
+  path: `${__dirname}/../.env`,
 });
 
 export const {
-    PORT, 
-    DB_USERNAME,
-    DB_PASSWORD,
-    DB_HOST,
-    DB_DATABASE
-
-} = {...process.env} as {[key: string]: string}
+  PORT,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_DATABASE,
+  TEST_DATABASE,
+  TEST_USERNAME,
+  TEST_PASSWORD,
+} = { ...process.env } as { [key: string]: string };

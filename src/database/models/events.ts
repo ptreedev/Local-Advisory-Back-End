@@ -5,7 +5,7 @@ import {
   Model,
   NonAttribute,
 } from "sequelize";
-import sequelizeConnection from "../connection";
+import { sequelizeConnection } from "../connection";
 import User from "./user";
 import Category from "./category";
 

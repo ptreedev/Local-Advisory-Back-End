@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 import { DataTypes, Model } from "sequelize";
-import sequelizeConnection from "../connection";
+import { sequelizeConnection } from "../connection";
 import Event from "./events";
 
 interface LocationAttributes {
@@ -16,7 +16,7 @@ interface LocationAttributes {
   updatedAt?: Date;
   deletedAt?: Date;
   createdAt?: Date;
-};
+}
 
 class Location extends Model<LocationAttributes> implements LocationAttributes {
   public id!: number;
@@ -30,41 +30,43 @@ class Location extends Model<LocationAttributes> implements LocationAttributes {
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
-  Location.init({
+Location.init(
+  {
     id: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.NUMBER
-    }, 
+      type: DataTypes.NUMBER,
+    },
     name: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     addressLine1: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     addressLine2: {
       allowNull: true,
-      type:DataTypes.STRING
+      type: DataTypes.STRING,
     },
     city: {
       allowNull: false,
-      type:DataTypes.STRING
+      type: DataTypes.STRING,
     },
     county: {
       allowNull: false,
-      type: DataTypes.STRING
+      type: DataTypes.STRING,
     },
     postCode: {
       allowNull: false,
-      type: DataTypes.STRING
-    }
-
-  }, {
+      type: DataTypes.STRING,
+    },
+  },
+  {
     sequelize: sequelizeConnection,
-    modelName: 'Location',
-  });
+    modelName: "Location",
+  }
+);
 // Location.hasMany(Event);
 export default Location;
