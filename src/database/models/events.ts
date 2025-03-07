@@ -55,7 +55,7 @@ Event.init(
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     name: {
       allowNull: false,
