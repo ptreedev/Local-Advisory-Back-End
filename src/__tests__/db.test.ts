@@ -9,9 +9,9 @@ describe("GET: /", () => {
     await testConnection.sync({ force: true });
   });
 
-  test("200: Returns Test Database", async () => {
+  test("200: Returns all users", async () => {
     return request(app)
-      .get("/")
+      .get("/api/users")
       .expect(200)
       .then(({ body }) => {
         console.log(body);
