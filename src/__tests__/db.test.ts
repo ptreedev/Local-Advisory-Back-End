@@ -1,12 +1,15 @@
 import { app } from "../index";
-import { testConnection } from "../database/connection";
-
+import { sequelizeConnection } from "../database/connection";
 import request from "supertest";
-import { Sequelize } from "sequelize";
+import { exec } from "child_process";
+import util from "util";
+import seedUsers from "../database/seeders/20250307152709-seed-users";
+import User from "../database/models/user";
 
 describe("GET: /", () => {
   beforeAll(async () => {
-    await testConnection.sync({ force: true });
+    await sequelizeConnection.sync({ force: true });
+    await seedUsers.up(sequelizeConnection.getQueryInterface(), sequelizeConnection);
   });
 
   test("200: Returns all users", async () => {
@@ -15,10 +18,12 @@ describe("GET: /", () => {
       .expect(200)
       .then(({ body }) => {
         console.log(body);
+      }).catch((error) => {
+        console.log(error);
       });
   });
 
   afterAll(async () => {
-    await testConnection.close();
+    await sequelizeConnection.close();
   });
 });
