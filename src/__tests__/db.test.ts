@@ -1,14 +1,14 @@
 import { app } from "../index";
-import { testConnection } from "../database/connection";
-
+import { sequelizeConnection } from "../database/connection";
+import util from "util";
+import { exec } from "child_process";
 import request from "supertest";
-import { Sequelize } from "sequelize";
 
+beforeAll(async () => {
+  await sequelizeConnection.sync({ force: true });
+  await util.promisify(exec)("npx sequelize-cli db:seed:all");
+});
 describe("GET: /", () => {
-  beforeAll(async () => {
-    await testConnection.sync({ force: true });
-  });
-
   test("200: Returns all users", async () => {
     return request(app)
       .get("/api/users")
@@ -19,6 +19,6 @@ describe("GET: /", () => {
   });
 
   afterAll(async () => {
-    await testConnection.close();
+    await sequelizeConnection.close();
   });
 });

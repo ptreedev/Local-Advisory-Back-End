@@ -14,7 +14,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn src/server.ts",
-    "test": "jest --runInBand"
+    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

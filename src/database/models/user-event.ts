@@ -29,15 +29,15 @@ UserEvent.init(
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     eventId: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     userId: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     createdAt: {
       allowNull: true,

@@ -32,7 +32,7 @@ User.init(
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     firstName: {
       allowNull: false,

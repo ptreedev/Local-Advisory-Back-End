@@ -4,27 +4,18 @@ import {
   DB_HOST,
   DB_PASSWORD,
   DB_USERNAME,
-  TEST_DATABASE,
-  TEST_PASSWORD,
-  TEST_USERNAME,
+  DB_CONNECTION,
+  DB_STORAGE,
 } from "../configs";
+
+const dialect = DB_CONNECTION as "sqlite" | "mysql";
 
 export let sequelizeConnection: Sequelize = new Sequelize(
   DB_DATABASE,
   DB_USERNAME,
   DB_PASSWORD,
   {
-    dialect: "sqlite",
-    storage: "sequelize.sqlite",
-  }
-);
-
-export let testConnection: Sequelize = new Sequelize(
-  TEST_DATABASE,
-  TEST_USERNAME,
-  TEST_PASSWORD,
-  {
-    dialect: "sqlite",
-    storage: "test.sqlite",
+    dialect: dialect,
+    storage: DB_STORAGE,
   }
 );
