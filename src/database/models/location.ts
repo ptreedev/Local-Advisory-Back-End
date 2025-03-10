@@ -2,7 +2,6 @@
 
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../connection";
-import Event from "./events";
 
 interface LocationAttributes {
   name: string;

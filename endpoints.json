@@ -1,0 +1,38 @@
+{
+    "GET /api": {
+      "description": "serves up a json representation of all the available endpoints of the api"
+    },
+    "GET /api/users": {
+        "description": "serves an array of all users",
+        "queries": [],
+        "example": [
+            {
+                "id": 1,
+                "firstName": "Alice",
+                "lastName": "Johnson",
+                "email": "alice@example.com",
+                "password": "$2b$10$abcdefghijklmnopqrstuv",
+                "createdAt": "2025-03-10T11:00:39.725Z",
+                "updatedAt": "2025-03-10T11:00:39.725Z"
+              },
+              {
+                "id": 2,
+                "firstName": "Bob",
+                "lastName": "Smith",
+                "email": "bob@example.com",
+                "password": "$2b$10$abcdefghijklmnopqrstuv",
+                "createdAt": "2025-03-10T11:00:39.725Z",
+                "updatedAt": "2025-03-10T11:00:39.725Z"
+              },
+              {
+                "id": 3,
+                "firstName": "Charlie",
+                "lastName": "Brown",
+                "email": "charlie@example.com",
+                "password": "$2b$10$abcdefghijklmnopqrstuv",
+                "createdAt": "2025-03-10T11:00:39.725Z",
+                "updatedAt": "2025-03-10T11:00:39.725Z"
+              }
+        ]
+    }
+}

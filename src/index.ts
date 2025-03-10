@@ -1,15 +1,15 @@
-import User from "./database/models/user";
-import Event from "./database/models/events";
-import Location from "./database/models/location";
-import Category from "./database/models/category";
-
 import "./database/models";
 import Express from "express";
-import { getUsers } from "./controllers/controller";
+import { getApi, getUsers } from "./controllers/controller";
 
 const app = Express();
+app.use(Express.json());
 
+app.get("/api", getApi);
 app.get("/api/users", getUsers);
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "URL not found" });
+});
 
 // app.get("/", async (req, res) => {
 //   const user = await User.create({

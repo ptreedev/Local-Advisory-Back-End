@@ -6,7 +6,7 @@ import {
   NonAttribute,
 } from "sequelize";
 import { sequelizeConnection } from "../connection";
-import User from "./user";
+import { User } from "./user";
 import Category from "./category";
 
 interface EventAttributes {
