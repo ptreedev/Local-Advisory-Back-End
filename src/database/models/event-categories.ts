@@ -31,11 +31,11 @@ EventCategory.init(
     },
     eventId: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     categoryId: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
     createdAt: {
       allowNull: true,
