@@ -1,12 +1,13 @@
 import "./database/models";
 import Express from "express";
-import { getApi, getUsers } from "./controllers/controller";
+import { getApi, getUsers, postUser } from "./controllers/controller";
 
 const app = Express();
 app.use(Express.json());
 
 app.get("/api", getApi);
 app.get("/api/users", getUsers);
+app.post("/api/user", postUser);
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "URL not found" });
 });

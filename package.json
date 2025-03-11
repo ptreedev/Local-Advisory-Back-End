@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@sequelize/sqlite3": "^7.0.0-alpha.45",
+    "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "passport": "^0.7.0",
@@ -17,6 +18,7 @@
     "test": "NODE_ENV=test jest --runInBand"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/express": "^5.0.0",
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.4",

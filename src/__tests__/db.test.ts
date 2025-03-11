@@ -48,12 +48,39 @@ describe("GET: /api/users", () => {
 });
 
 describe("Non-existent endpoint", () => {
-  test("404: responds with an appropriate message when an incorrect url is used", () => {
+  test("404: responds with an appropriate message when an incorrect url is used", async () => {
     return request(app)
       .get("/api/use")
       .expect(404)
       .then(({ body }) => {
         expect(body.msg).toBe("URL not found");
+      });
+  });
+});
+
+describe("POST: /api/user", () => {
+  test("201: Creates new user and stores hashed password", async () => {
+    const newUser = {
+      firstName: "Test",
+      lastName: "User",
+      email: "testuser@user.com",
+      password: "test1234",
+    };
+    return request(app)
+      .post("/api/user")
+      .send(newUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body).toMatchObject({
+          id: 4,
+          firstName: "Test",
+          lastName: "User",
+          email: "testuser@user.com",
+          password: expect.any(String),
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
+        expect(body.password).not.toBe(newUser.password);
       });
   });
 });
