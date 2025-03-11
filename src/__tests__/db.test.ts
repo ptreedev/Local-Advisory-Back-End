@@ -83,4 +83,19 @@ describe("POST: /api/user", () => {
         expect(body.password).not.toBe(newUser.password);
       });
   });
+  test("422: returns a validation error if email already exists ", () => {
+    const newUser = {
+      firstName: "Test",
+      lastName: "User",
+      email: "alice@example.com",
+      password: "test1234",
+    };
+    return request(app)
+      .post("/api/user")
+      .send(newUser)
+      .expect(422)
+      .then((data) => {
+        expect(data.text).toBe("Invalid request, check submitted fields");
+      });
+  });
 });

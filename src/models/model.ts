@@ -23,7 +23,11 @@ export const createUser = async (
       where: { email: email },
     })
   ) {
-    return { msg: "e-mail already in use" };
+    const err = new Error(
+      "There was an unexpected error with that email, please try again"
+    );
+    err.name = "ValidationError";
+    throw err;
   } else {
     const hashedPassword: string = await bcrypt.hash(password, 10);
     const newUser = await User.create({

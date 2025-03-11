@@ -1,5 +1,5 @@
 import "./database/models";
-import Express from "express";
+import Express, { NextFunction, Request, Response } from "express";
 import { getApi, getUsers, postUser } from "./controllers/controller";
 
 const app = Express();
@@ -8,8 +8,22 @@ app.use(Express.json());
 app.get("/api", getApi);
 app.get("/api/users", getUsers);
 app.post("/api/user", postUser);
+
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "URL not found" });
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (
+    err.message ===
+    "There was an unexpected error with that email, please try again"
+  ) {
+    res.status(422).send("Invalid request, check submitted fields");
+  }
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send({ msg: "Internal Server Error" });
 });
 
 // app.get("/", async (req, res) => {
