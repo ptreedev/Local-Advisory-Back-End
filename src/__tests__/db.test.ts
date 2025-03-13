@@ -58,7 +58,7 @@ describe("Non-existent endpoint", () => {
   });
 });
 
-describe("POST: /api/user", () => {
+describe("POST: /api/register", () => {
   test("201: Creates new user and stores hashed password", async () => {
     const newUser = {
       firstName: "Test",
@@ -67,7 +67,7 @@ describe("POST: /api/user", () => {
       password: "test1234",
     };
     return request(app)
-      .post("/api/user")
+      .post("/api/register")
       .send(newUser)
       .expect(201)
       .then(({ body }) => {
@@ -91,11 +91,14 @@ describe("POST: /api/user", () => {
       password: "test1234",
     };
     return request(app)
-      .post("/api/user")
+      .post("/api/register")
       .send(newUser)
       .expect(422)
       .then((data) => {
-        expect(data.text).toBe("Invalid request, check submitted fields");
+        console.log(data.body);
+        expect(data.body).toBe({
+          msg: "Invalid request, check submitted fields",
+        });
       });
   });
 });
