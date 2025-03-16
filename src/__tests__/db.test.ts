@@ -2,15 +2,37 @@ import { app } from "../index";
 import { sequelizeConnection } from "../database/connection";
 import request from "supertest";
 import seedUsers from "../database/seeders/20250307152709-seed-users";
-import { UserAttributes } from "../database/models/user";
+import seedEvents from "../database/seeders/20250314101101-events";
+import seedCategories from "../database/seeders/20250314105814-categories";
+import seedLocations from "../database/seeders/20250314105814-categories";
 import endpoints from "../../endpoints.json";
+import { UserAttributes } from "../database/models/user";
+import { Event, EventAttributes } from "../database/models/events";
+import { Category, CategoryAttributes } from "../database/models/category";
+import { LocationAttributes } from "../database/models/location";
 
 beforeAll(async () => {
-  await sequelizeConnection.sync({ force: true });
-  await seedUsers.up(
-    sequelizeConnection.getQueryInterface(),
-    sequelizeConnection
-  );
+  try {
+    await sequelizeConnection.sync({ force: true });
+    await seedUsers.up(
+      sequelizeConnection.getQueryInterface(),
+      sequelizeConnection
+    );
+    await seedCategories.up(
+      sequelizeConnection.getQueryInterface(),
+      sequelizeConnection
+    );
+    await seedLocations.up(
+      sequelizeConnection.getQueryInterface(),
+      sequelizeConnection
+    );
+    await seedEvents.up(
+      sequelizeConnection.getQueryInterface(),
+      sequelizeConnection
+    );
+  } catch (err) {
+    console.log(err);
+  }
 });
 afterAll(async () => {
   await sequelizeConnection.close();
@@ -41,6 +63,91 @@ describe("GET: /api/users", () => {
             password: expect.any(String),
             createdAt: expect.any(String),
             updatedAt: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET: /api/events", () => {
+  test("200: returns a list of events", async () => {
+    return request(app)
+      .get("/api/events")
+      .expect(200)
+      .then(({ body }) => {
+        body.forEach((event: EventAttributes) => {
+          expect(event).toMatchObject({
+            name: expect.any(String),
+            description: expect.any(String),
+            dateFrom: expect.any(String),
+            timeStart: expect.any(String),
+            timeEnd: expect.any(String),
+            dateTo: expect.any(String),
+            image: expect.any(String),
+            locationId: expect.any(Number),
+            ownerId: expect.any(Number),
+          });
+        });
+      });
+  });
+});
+
+describe("GET: /api/loactions", () => {
+  test("200: returns a list of locations", async () => {
+    return request(app)
+      .get("/api/locations")
+      .expect(200)
+      .then(({ body }) => {
+        body.forEach((location: LocationAttributes) => {
+          expect(location).toMatchObject({
+            id: expect.any(Number),
+            name: expect.any(String),
+            addressLine1: expect.any(String),
+            addressLine2: expect.any(String),
+            city: expect.any(String),
+            county: expect.any(String),
+            postCode: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET: /api/categories", () => {
+  test("200: returns a list of categories", async () => {
+    return request(app)
+      .get("/api/categories")
+      .expect(200)
+      .then(({ body }) => {
+        body.forEach((category: CategoryAttributes) => {
+          expect(category).toMatchObject({
+            id: expect.any(Number),
+            name: expect.any(String),
+          });
+        });
+      });
+  });
+});
+
+describe("GET: /api/events?sort_by=:category", () => {
+  test("200: returns a list of events sorted/filtered by category", async () => {
+    return request(app)
+      .get("/api/events?sort_by=music")
+      .expect(200)
+      .then(({ body }) => {
+        console.log(body);
+        body.forEach((event: Event) => {
+          expect(event).toMatchObject({
+            name: expect.any(String),
+            description: expect.any(String),
+            dateFrom: expect.any(String),
+            timeStart: expect.any(String),
+            timeEnd: expect.any(String),
+            dateTo: expect.any(String),
+            image: expect.any(String),
+            locationId: expect.any(Number),
+            ownerId: expect.any(Number),
+            categories: ["music"],
           });
         });
       });
@@ -95,8 +202,7 @@ describe("POST: /api/register", () => {
       .send(newUser)
       .expect(422)
       .then((data) => {
-        console.log(data.body);
-        expect(data.body).toBe({
+        expect(data.body).toEqual({
           msg: "Invalid request, check submitted fields",
         });
       });

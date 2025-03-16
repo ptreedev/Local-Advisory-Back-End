@@ -1,12 +1,12 @@
 "use strict";
 
-import { DataTypes, QueryInterface } from "sequelize";
+import { DataTypes, QueryInterface, Sequelize } from "sequelize";
 
 /** @type {import('sequelize-cli').Migration} */
 export default {
   async up(
     queryInterface: QueryInterface,
-    Sequelize: typeof DataTypes
+    Sequelize: Sequelize
   ): Promise<void> {
     await queryInterface.bulkInsert("Events", [
       {
@@ -20,6 +20,8 @@ export default {
         image: "tech_conference_2025.jpg",
         locationId: 1,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Art Exhibition",
@@ -32,6 +34,8 @@ export default {
         image: "art_exhibition.jpg",
         locationId: 2,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Music Festival",
@@ -44,6 +48,8 @@ export default {
         image: "music_festival_2025.jpg",
         locationId: 3,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Annual Business Summit",
@@ -56,6 +62,8 @@ export default {
         image: "business_summit.jpg",
         locationId: 4,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Film Premiere Night",
@@ -68,6 +76,8 @@ export default {
         image: "film_premiere_night.jpg",
         locationId: 5,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Startup Pitch Event",
@@ -80,6 +90,8 @@ export default {
         image: "startup_pitch_event.jpg",
         locationId: 6,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Yoga Retreat",
@@ -92,6 +104,8 @@ export default {
         image: "yoga_retreat_2025.jpg",
         locationId: 7,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Food Festival",
@@ -104,6 +118,8 @@ export default {
         image: "food_festival_2025.jpg",
         locationId: 8,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Fashion Show 2025",
@@ -116,6 +132,8 @@ export default {
         image: "fashion_show_2025.jpg",
         locationId: 9,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         name: "Charity Gala",
@@ -128,6 +146,8 @@ export default {
         image: "charity_gala_2025.jpg",
         locationId: 10,
         ownerId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },

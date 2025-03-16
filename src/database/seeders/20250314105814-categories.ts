@@ -8,44 +8,54 @@ export default {
   ): Promise<void> {
     await queryInterface.bulkInsert("Categories", [
       {
-        id: 1,
         name: "Technology",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 2,
         name: "Art",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 3,
         name: "Music",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 4,
         name: "Business",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 5,
         name: "Film",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 6,
         name: "Startups",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 7,
         name: "Wellness",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 8,
         name: "Food",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 9,
         name: "Fashion",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        id: 10,
         name: "Charity",
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ]);
   },

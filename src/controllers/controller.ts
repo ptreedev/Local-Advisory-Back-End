@@ -1,5 +1,12 @@
 import { Request, Response, NextFunction } from "express";
-import { createUser, selectEndpoints, selectUsers } from "../models/model";
+import {
+  createUser,
+  selectCategories,
+  selectEndpoints,
+  selectEvents,
+  selectLocations,
+  selectUsers,
+} from "../models/model";
 
 export const getApi = async (
   req: Request,
@@ -22,6 +29,45 @@ export const getUsers = async (
   try {
     const users = await selectUsers();
     res.status(200).json(users);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getEvents = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const events = await selectEvents();
+    res.status(200).json(events);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getLocations = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const loactions = await selectLocations();
+    res.status(200).json(loactions);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getCategories = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const categories = await selectCategories();
+    res.status(200).json(categories);
   } catch (error) {
     next(error);
   }

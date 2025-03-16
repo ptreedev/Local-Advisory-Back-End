@@ -2,7 +2,6 @@
 
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../connection";
-
 interface UserAttributes {
   firstName: string;
   lastName: string;

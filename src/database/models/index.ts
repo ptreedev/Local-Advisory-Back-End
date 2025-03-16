@@ -1,18 +1,14 @@
-import Category from "./category";
+import { Category } from "./category";
 import EventCategory from "./event-categories";
-import Event from "./events";
-import Location from "./location";
+import { Event } from "./events";
+import { Location } from "./location";
 import { User } from "./user";
 import UserEvent from "./user-event";
 
 Location.hasMany(Event, {
   foreignKey: "eventId",
-  as: "events",
 });
-Event.belongsTo(Location, {
-  foreignKey: "locationId",
-  as: "location",
-});
+Event.belongsTo(Location);
 User.hasMany(Event, {
   foreignKey: "ownerId",
   as: "events",
@@ -34,7 +30,7 @@ Event.belongsToMany(User, {
   otherKey: "eventId",
 });
 Category.belongsToMany(Event, {
-  as: "Events",
+  as: "events",
   through: EventCategory,
   foreignKey: "eventId",
   otherKey: "categoryId",

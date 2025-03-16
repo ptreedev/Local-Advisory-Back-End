@@ -1,8 +1,17 @@
 import "./database/models";
 import Express, { NextFunction, Request, Response } from "express";
-import { getApi, getUsers, postUser } from "./controllers/controller";
+import {
+  getApi,
+  getCategories,
+  getEvents,
+  getLocations,
+  getUsers,
+  postUser,
+} from "./controllers/controller";
 import bodyParser from "body-parser";
 import { User } from "./database/models/user";
+import { Event } from "./database/models/events";
+import { Location } from "./database/models/location";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -27,6 +36,9 @@ app.get(
 );
 app.get("/api", getApi);
 app.get("/api/users", getUsers);
+app.get("/api/events", getEvents);
+app.get("/api/locations", getLocations);
+app.get("/api/categories", getCategories);
 app.post("/api/register", postUser);
 app.post("/api/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;

@@ -36,4 +36,4 @@ Category.init(
     modelName: "Category",
   }
 );
-export default Category;
+export { Category, CategoryAttributes };

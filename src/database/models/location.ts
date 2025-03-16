@@ -68,4 +68,4 @@ Location.init(
   }
 );
 // Location.hasMany(Event);
-export default Location;
+export { Location, LocationAttributes };
