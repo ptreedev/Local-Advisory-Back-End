@@ -5,9 +5,7 @@ import { Location } from "./location";
 import { User } from "./user";
 import UserEvent from "./user-event";
 
-Location.hasMany(Event, {
-  foreignKey: "eventId",
-});
+Location.hasMany(Event);
 Event.belongsTo(Location);
 User.hasMany(Event, {
   foreignKey: "ownerId",

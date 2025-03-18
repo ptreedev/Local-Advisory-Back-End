@@ -84,7 +84,7 @@ describe("GET: /api/events", () => {
             timeEnd: expect.any(String),
             dateTo: expect.any(String),
             image: expect.any(String),
-            locationId: expect.any(Number),
+            LocationId: expect.any(Number),
             ownerId: expect.any(Number),
           });
         });
@@ -129,15 +129,28 @@ describe("GET: /api/categories", () => {
   });
 });
 
-describe("GET: /api/events?sort_by=:category", () => {
-  test("200: returns a list of events sorted/filtered by category", async () => {
+describe("GET: /api/events?category=:category", () => {
+  test("200: returns a list of events filtered by category", async () => {
+    try {
+      const musicEvent = await Event.findOne({
+        where: { id: 3 },
+        include: "category",
+      });
+      const foundCategory = await Category.findOne({
+        where: { name: "Music" },
+      });
+      await musicEvent!.addCategory(foundCategory as Category);
+    } catch (err) {
+      console.log(err);
+    }
+
     return request(app)
-      .get("/api/events?sort_by=music")
+      .get("/api/events?category=Music")
       .expect(200)
-      .then(({ body }) => {
-        console.log(body);
+      .then(({ body }): void => {
         body.forEach((event: Event) => {
           expect(event).toMatchObject({
+            id: 3,
             name: expect.any(String),
             description: expect.any(String),
             dateFrom: expect.any(String),
@@ -145,9 +158,9 @@ describe("GET: /api/events?sort_by=:category", () => {
             timeEnd: expect.any(String),
             dateTo: expect.any(String),
             image: expect.any(String),
-            locationId: expect.any(Number),
-            ownerId: expect.any(Number),
-            categories: ["music"],
+            LocationId: 3,
+            ownerId: 1,
+            category: [{ name: "Music", id: 3 }],
           });
         });
       });

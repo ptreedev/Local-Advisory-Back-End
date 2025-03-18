@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import { Event } from "../database/models/events";
 import { Location } from "../database/models/location";
 import { Category } from "../database/models/category";
+import { ParsedQs } from "qs";
 
 export const selectEndpoints = async () => {
   return endpoints;
@@ -14,9 +15,32 @@ export const selectUsers = async () => {
   return users;
 };
 
-export const selectEvents = async () => {
-  const events = await Event.findAll();
-  return events;
+export const selectEvents = async (
+  category: string | ParsedQs | (string | ParsedQs)[] | undefined
+) => {
+  try {
+    if (category) {
+      const filterEvents = await Event.findAll({
+        include: [
+          {
+            model: Category,
+            as: "category",
+            where: { name: category },
+            attributes: ["name", "id"],
+            through: {
+              attributes: [],
+            },
+          },
+        ],
+      });
+      return filterEvents;
+    } else {
+      const events = await Event.findAll();
+      return events;
+    }
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 export const selectLocations = async () => {

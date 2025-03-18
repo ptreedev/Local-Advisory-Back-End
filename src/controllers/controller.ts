@@ -40,7 +40,8 @@ export const getEvents = async (
   next: NextFunction
 ) => {
   try {
-    const events = await selectEvents();
+    const { category } = req.query;
+    const events = await selectEvents(category);
     res.status(200).json(events);
   } catch (error) {
     next(error);
