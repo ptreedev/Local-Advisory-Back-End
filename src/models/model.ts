@@ -100,10 +100,11 @@ export const createEvent = async (
       dateTo: new Date(dateTo),
       timeStart: new Date(timeStart),
       timeEnd: new Date(timeEnd),
-      locationId: 1,
+      locationId: locationId,
       ownerId: ownerId,
       image: image,
     });
+    // newEvent.addLocation(locationId);
     return newEvent;
   } catch (err) {
     console.log(err);

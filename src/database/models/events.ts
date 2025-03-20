@@ -88,9 +88,9 @@ Event.init(
     ownerId: {
       type: DataTypes.INTEGER,
     },
-    // locationId: {
-    //   type: DataTypes.INTEGER,
-    // },
+    locationId: {
+      type: DataTypes.INTEGER,
+    },
   },
   {
     sequelize: sequelizeConnection,

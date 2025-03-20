@@ -84,7 +84,7 @@ describe("GET: /api/events", () => {
             timeEnd: expect.any(String),
             dateTo: expect.any(String),
             image: expect.any(String),
-            LocationId: expect.any(Number),
+            locationId: expect.any(Number),
             ownerId: expect.any(Number),
           });
         });
@@ -158,7 +158,7 @@ describe("GET: /api/events?category=:category", () => {
             timeEnd: expect.any(String),
             dateTo: expect.any(String),
             image: expect.any(String),
-            LocationId: 3,
+            locationId: 3,
             ownerId: 1,
             category: [{ name: "Music", id: 3 }],
           });
@@ -249,7 +249,7 @@ describe("POST: /api/events/create-event", () => {
           timeEnd: expect.any(String),
           dateTo: expect.any(String),
           image: "test.jpg",
-          LocationId: 1,
+          locationId: 1,
           ownerId: 1,
           createdAt: expect.any(String),
           updatedAt: expect.any(String),

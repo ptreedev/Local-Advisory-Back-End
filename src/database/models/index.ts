@@ -5,8 +5,14 @@ import { Location } from "./location";
 import { User } from "./user";
 import UserEvent from "./user-event";
 
-Location.hasMany(Event);
-Event.belongsTo(Location);
+Location.hasMany(Event,{
+  foreignKey: "locationId",
+  as: "events",
+});
+Event.belongsTo(Location, {
+  foreignKey: "locationId",
+  as: "locations",
+});
 User.hasMany(Event, {
   foreignKey: "ownerId",
   as: "events",
