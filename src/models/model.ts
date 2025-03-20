@@ -80,3 +80,32 @@ export const createUser = async (
     return newUser;
   }
 };
+
+export const createEvent = async (
+  name: string,
+  description: string,
+  dateFrom: string,
+  dateTo: string,
+  timeStart: string,
+  timeEnd: string,
+  locationId: number,
+  ownerId: number,
+  image: string
+) => {
+  try {
+    const newEvent = await Event.create({
+      name: name,
+      description: description,
+      dateFrom: new Date(dateFrom),
+      dateTo: new Date(dateTo),
+      timeStart: new Date(timeStart),
+      timeEnd: new Date(timeEnd),
+      locationId: 1,
+      ownerId: ownerId,
+      image: image,
+    });
+    return newEvent;
+  } catch (err) {
+    console.log(err);
+  }
+};

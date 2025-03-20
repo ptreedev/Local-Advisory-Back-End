@@ -6,6 +6,7 @@ import {
   getEvents,
   getLocations,
   getUsers,
+  postEvent,
   postUser,
 } from "./controllers/controller";
 import bodyParser from "body-parser";
@@ -39,7 +40,9 @@ app.get("/api/users", getUsers);
 app.get("/api/events", getEvents);
 app.get("/api/locations", getLocations);
 app.get("/api/categories", getCategories);
+app.post("/api/events/create-event", postEvent);
 app.post("/api/register", postUser);
+
 app.post("/api/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {

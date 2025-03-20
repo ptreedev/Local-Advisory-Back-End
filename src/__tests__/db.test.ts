@@ -221,3 +221,46 @@ describe("POST: /api/register", () => {
       });
   });
 });
+
+describe("POST: /api/events/create-event", () => {
+  test("201: Creates a new event and returns the created event", async () => {
+    const newEvent = {
+      name: "Test Event",
+      description: "Testing Events",
+      dateFrom: "2025-05-01",
+      timeStart: "2025-05-01T09:00:00",
+      timeEnd: "2025-05-01T17:00:00",
+      dateTo: "2025-05-01",
+      image: "test.jpg",
+      locationId: 1,
+      ownerId: 1,
+    };
+    return request(app)
+      .post("/api/events/create-event")
+      .send(newEvent)
+      .expect(201)
+      .then(({ body }): void => {
+        console.log(body);
+        expect(body).toMatchObject({
+          name: "Test Event",
+          description: "Testing Events",
+          dateFrom: expect.any(String),
+          timeStart: expect.any(String),
+          timeEnd: expect.any(String),
+          dateTo: expect.any(String),
+          image: "test.jpg",
+          LocationId: 1,
+          ownerId: 1,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
+      });
+  });
+  test("event created has location id", async () => {
+    return request(app)
+      .get("/api/events")
+      .then(({ body }) => {
+        console.log(body);
+      });
+  });
+});

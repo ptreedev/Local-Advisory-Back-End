@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import {
+  createEvent,
   createUser,
   selectCategories,
   selectEndpoints,
@@ -7,6 +8,7 @@ import {
   selectLocations,
   selectUsers,
 } from "../models/model";
+import { time } from "console";
 
 export const getApi = async (
   req: Request,
@@ -85,5 +87,40 @@ export const postUser = async (
     res.status(201).json(newUser);
   } catch (error) {
     next(error);
+  }
+};
+
+export const postEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const {
+      name,
+      description,
+      dateFrom,
+      dateTo,
+      timeStart,
+      timeEnd,
+      locationId,
+      ownerId,
+      image,
+    } = req.body;
+    console.log(req.body);
+    const newEvent = await createEvent(
+      name,
+      description,
+      dateFrom,
+      dateTo,
+      timeStart,
+      timeEnd,
+      locationId,
+      ownerId,
+      image
+    );
+    res.status(201).json(newEvent);
+  } catch (err) {
+    console.log(err);
   }
 };
