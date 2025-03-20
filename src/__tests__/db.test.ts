@@ -240,7 +240,6 @@ describe("POST: /api/events/create-event", () => {
       .send(newEvent)
       .expect(201)
       .then(({ body }): void => {
-        console.log(body);
         expect(body).toMatchObject({
           name: "Test Event",
           description: "Testing Events",
