@@ -143,3 +143,18 @@ export const updateEvent = async (
     console.log(err);
   }
 };
+
+export const addEventToUser = async (userId: string, eventId: string) => {
+  try {
+    const userByID = await User.findOne({
+      where: { id: userId },
+      include: "registeredEvents",
+    });
+    const eventByID = await Event.findOne({ where: { id: eventId } });
+    await userByID?.addRegisteredEvent(eventByID as Event);
+    await userByID?.reload();
+    return userByID;
+  } catch (err) {
+    console.log(err);
+  }
+};

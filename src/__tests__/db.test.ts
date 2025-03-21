@@ -333,3 +333,44 @@ describe("PATCH: /api/event/:id", () => {
       });
   });
 });
+
+describe("PATCH: /api/user/register-event", () => {
+  test("200: Updates user profile with registered event", async () => {
+    const body = {
+      userId: 1,
+      eventId: 2,
+    };
+    return request(app)
+      .patch("/api/user/register-event")
+      .send(body)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toMatchObject({
+          id: 1,
+          firstName: "Alice",
+          lastName: "Johnson",
+          email: "alice@example.com",
+          password: "$2b$10$abcdefghijklmnopqrstuv",
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+          registeredEvents: [
+            {
+              id: 2,
+              name: "Art Exhibition",
+              description:
+                "An exhibition showcasing the works of local contemporary artists.",
+              dateFrom: expect.any(String),
+              timeStart: expect.any(String),
+              timeEnd: expect.any(String),
+              dateTo: expect.any(String),
+              image: "art_exhibition.jpg",
+              locationId: 2,
+              ownerId: 1,
+              createdAt: expect.any(String),
+              updatedAt: expect.any(String),
+            },
+          ],
+        });
+      });
+  });
+});

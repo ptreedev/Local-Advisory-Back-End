@@ -1,6 +1,13 @@
 "use strict";
 
-import { DataTypes, Model } from "sequelize";
+import {
+  BelongsToManyAddAssociationMixin,
+  DataTypes,
+  Model,
+  NonAttribute,
+} from "sequelize";
+import { Event } from "./events";
+
 import { sequelizeConnection } from "../connection";
 interface UserAttributes {
   firstName: string;
@@ -23,6 +30,12 @@ class User extends Model<UserAttributes> implements UserAttributes {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  declare registeredEvents?: NonAttribute<Event[]>;
+  declare addRegisteredEvent: BelongsToManyAddAssociationMixin<
+    Event,
+    Event["id"]
+  >;
 }
 
 User.init(

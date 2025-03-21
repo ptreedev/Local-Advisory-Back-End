@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import {
+  addEventToUser,
   createEvent,
   createUser,
   selectCategories,
@@ -162,6 +163,20 @@ export const patchEvent = async (
     };
     const updatedEvent = await updateEvent(id, updateObj);
     res.status(200).json(updatedEvent);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const registerEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId, eventId } = req.body;
+    const updatedUser = await addEventToUser(userId, eventId);
+    res.status(200).json(updatedUser);
   } catch (err) {
     next(err);
   }

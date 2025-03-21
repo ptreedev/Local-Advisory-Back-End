@@ -10,6 +10,7 @@ import {
   patchEvent,
   postEvent,
   postUser,
+  registerEvent,
 } from "./controllers/controller";
 import bodyParser from "body-parser";
 import { User } from "./database/models/user";
@@ -46,6 +47,7 @@ app.get("/api/locations", getLocations);
 app.get("/api/categories", getCategories);
 app.post("/api/events/create-event", postEvent);
 app.post("/api/register", postUser);
+app.patch("/api/user/register-event", registerEvent);
 
 app.post("/api/login", async (req: Request, res: Response) => {
   const { email, password } = req.body;
