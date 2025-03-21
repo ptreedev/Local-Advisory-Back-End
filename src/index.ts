@@ -84,14 +84,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
   if (err.message === "Event not found") {
     res.status(404).send({ msg: "Event not found" });
   } else next(err);
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log(err);
   if (err.message === "Invalid ID") {
     res.status(400).send({ msg: "Bad Request" });
   } else next(err);
