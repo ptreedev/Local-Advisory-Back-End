@@ -4,11 +4,12 @@ import {
   createUser,
   selectCategories,
   selectEndpoints,
+  selectEventbyID,
   selectEvents,
   selectLocations,
   selectUsers,
+  updateEvent,
 } from "../models/model";
-import { time } from "console";
 
 export const getApi = async (
   req: Request,
@@ -107,7 +108,6 @@ export const postEvent = async (
       ownerId,
       image,
     } = req.body;
-    console.log(req.body);
     const newEvent = await createEvent(
       name,
       description,
@@ -121,6 +121,48 @@ export const postEvent = async (
     );
     res.status(201).json(newEvent);
   } catch (err) {
-    console.log(err);
+    next(err);
+  }
+};
+
+export const getEventByID = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const isNumber = Number(id);
+    if (Number.isNaN(isNumber)) {
+      throw Error("Invalid ID");
+    }
+    const eventByID = await selectEventbyID(id);
+    res.status(200).json(eventByID);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchEvent = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const updateObj = {
+      name: req.body.name,
+      description: req.body.description,
+      locationId: req.body.locationId,
+      dateFrom: req.body.dateFrom,
+      dateTo: req.body.dateTo,
+      timeStart: req.body.timeStart,
+      timeEnd: req.body.timeEnd,
+      image: req.body.image,
+    };
+    const updatedEvent = await updateEvent(id, updateObj);
+    res.status(200).json(updatedEvent);
+  } catch (err) {
+    next(err);
   }
 };

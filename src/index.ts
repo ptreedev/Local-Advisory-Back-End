@@ -3,9 +3,11 @@ import Express, { NextFunction, Request, Response } from "express";
 import {
   getApi,
   getCategories,
+  getEventByID,
   getEvents,
   getLocations,
   getUsers,
+  patchEvent,
   postEvent,
   postUser,
 } from "./controllers/controller";
@@ -38,6 +40,8 @@ app.get(
 app.get("/api", getApi);
 app.get("/api/users", getUsers);
 app.get("/api/events", getEvents);
+app.get("/api/event/:id", getEventByID);
+app.patch("/api/event/:id", patchEvent);
 app.get("/api/locations", getLocations);
 app.get("/api/categories", getCategories);
 app.post("/api/events/create-event", postEvent);
@@ -76,7 +80,21 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     "There was an unexpected error with that email, please try again"
   ) {
     res.status(422).send({ msg: "Invalid request, check submitted fields" });
-  }
+  } else next(err);
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  if (err.message === "Event not found") {
+    res.status(404).send({ msg: "Event not found" });
+  } else next(err);
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.log(err);
+  if (err.message === "Invalid ID") {
+    res.status(400).send({ msg: "Bad Request" });
+  } else next(err);
 });
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {

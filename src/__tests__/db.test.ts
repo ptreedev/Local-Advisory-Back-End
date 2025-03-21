@@ -48,6 +48,7 @@ describe("GET: /api", () => {
       });
   });
 });
+
 describe("GET: /api/users", () => {
   test("200: Returns all users", async () => {
     return request(app)
@@ -240,7 +241,6 @@ describe("POST: /api/events/create-event", () => {
       .send(newEvent)
       .expect(201)
       .then(({ body }): void => {
-        console.log(body);
         expect(body).toMatchObject({
           name: "Test Event",
           description: "Testing Events",
@@ -256,11 +256,80 @@ describe("POST: /api/events/create-event", () => {
         });
       });
   });
-  test("event created has location id", async () => {
+});
+
+describe("GET: /api/event/:id", () => {
+  test("200: returns an event by ID", async () => {
     return request(app)
-      .get("/api/events")
+      .get("/api/event/1")
+      .expect(200)
       .then(({ body }) => {
-        console.log(body);
+        expect(body).toMatchObject({
+          id: 1,
+          name: "Tech Conference 2025",
+          description:
+            "A gathering of the brightest minds in tech to discuss innovations in AI and software development.",
+          dateFrom: expect.any(String),
+          timeStart: expect.any(String),
+          timeEnd: expect.any(String),
+          dateTo: expect.any(String),
+          image: "tech_conference_2025.jpg",
+          locationId: 1,
+          ownerId: 1,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
+      });
+  });
+  test("404: responds with appropriate status and msg when given a valid id but non-existent id", () => {
+    return request(app)
+      .get("/api/event/999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Event not found");
+      });
+  });
+  test("400: sends and appropriate status and error message when given an ivalid id", () => {
+    return request(app)
+      .get("/api/event/banana")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad Request");
+      });
+  });
+});
+
+describe("PATCH: /api/event/:id", () => {
+  test("200: updates event", async () => {
+    const updateEvent = {
+      name: "Changing Event Name",
+      description: "A mighty fine event",
+      locationId: 2,
+      dateFrom: "2025-06-02",
+      dateTo: "2025-06-03",
+      image: "a new image.jpg",
+      timeStart: "2025-06-02T10:00:00",
+      timeEnd: "2025-06-02T15:30:00",
+    };
+    return request(app)
+      .patch("/api/event/1")
+      .send(updateEvent)
+      .expect(200)
+      .then(({ body }) => {
+        expect(body).toMatchObject({
+          id: 1,
+          name: "Changing Event Name",
+          description: "A mighty fine event",
+          image: "a new image.jpg",
+          dateFrom: "2025-06-02T00:00:00.000Z",
+          dateTo: "2025-06-03T00:00:00.000Z",
+          timeStart: "2025-06-02T09:00:00.000Z",
+          timeEnd: "2025-06-02T14:30:00.000Z",
+          ownerId: 1,
+          locationId: 2,
+          createdAt: expect.any(String),
+          updatedAt: expect.any(String),
+        });
       });
   });
 });

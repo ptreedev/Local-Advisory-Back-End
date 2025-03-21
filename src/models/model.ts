@@ -104,8 +104,41 @@ export const createEvent = async (
       ownerId: ownerId,
       image: image,
     });
-    // newEvent.addLocation(locationId);
     return newEvent;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const selectEventbyID = async (id: string) => {
+  const eventByID = await Event.findOne({ where: { id: id } });
+  if (eventByID === null) {
+    const err = new Error("Event not found");
+    throw err;
+  } else {
+    return eventByID;
+  }
+};
+
+interface UpdateBody<T> {
+  [index: string]: T;
+}
+
+export const updateEvent = async (
+  id: string,
+  updateObj: UpdateBody<object>
+) => {
+  try {
+    const eventByID = await Event.findOne({ where: { id: id } });
+    let setObj: UpdateBody<object> = {};
+    Object.keys(updateObj).forEach((key: string) => {
+      if (updateObj[key]) {
+        setObj[key] = updateObj[key];
+      }
+    });
+    await eventByID?.set(setObj);
+    await eventByID?.save();
+    return eventByID;
   } catch (err) {
     console.log(err);
   }
