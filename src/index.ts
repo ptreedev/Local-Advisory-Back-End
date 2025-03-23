@@ -7,6 +7,7 @@ import {
   getEvents,
   getLocations,
   getUsers,
+  loginUser,
   patchEvent,
   postEvent,
   postUser,
@@ -38,6 +39,31 @@ app.get(
     res.send("authenticated");
   }
 );
+// async (req: Request, res: Response) => {
+//   const { email, password } = req.body;
+//   try {
+//     const userExists = await User.findOne({ where: { email: email } });
+//     // If the user does not exist, return a message
+//     if (!userExists) {
+//       res.status(422).json({ message: "Incorrect username or passsword" });
+//     }
+//     const passwordsMatch = await bcrypt.compare(password, userExists!.password);
+//     if (!passwordsMatch) {
+//       res.status(422).json({ message: "Incorrect username or passsword" });
+//     }
+//     const jwtToken = jwt.sign(
+//       { id: userExists?.id, email: userExists?.email },
+//       process.env.JWT_SECRET as string,
+//       { expiresIn: "7d" }
+//     );
+//     res.json({ message: "Hello again!", token: jwtToken });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// }
+app.post("/api/login", loginUser);
+app.post("/api/register", postUser);
+
 app.get("/api", getApi);
 app.get("/api/users", getUsers);
 app.get("/api/events", getEvents);
@@ -46,31 +72,7 @@ app.patch("/api/event/:id", patchEvent);
 app.get("/api/locations", getLocations);
 app.get("/api/categories", getCategories);
 app.post("/api/events/create-event", postEvent);
-app.post("/api/register", postUser);
 app.patch("/api/user/register-event", registerEvent);
-
-app.post("/api/login", async (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  try {
-    const userExists = await User.findOne({ where: { email: email } });
-    // If the user does not exist, return a message
-    if (!userExists) {
-      res.status(422).json({ message: "Incorrect username or passsword" });
-    }
-    const passwordsMatch = await bcrypt.compare(password, userExists!.password);
-    if (!passwordsMatch) {
-      res.status(422).json({ message: "Incorrect username or passsword" });
-    }
-    const jwtToken = jwt.sign(
-      { id: userExists?.id, email: userExists?.email },
-      process.env.JWT_SECRET as string,
-      { expiresIn: "7d" }
-    );
-    res.json({ message: "Hello again!", token: jwtToken });
-  } catch (err) {
-    console.log(err);
-  }
-});
 
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "URL not found" });
@@ -94,6 +96,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   if (err.message === "Invalid ID") {
     res.status(400).send({ msg: "Bad Request" });
+  } else next(err);
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  if (err.message === "Invalid username or password") {
+    res.status(422).send({ msg: "Invalid username or passsword" });
   } else next(err);
 });
 

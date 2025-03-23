@@ -3,6 +3,7 @@ import {
   addEventToUser,
   createEvent,
   createUser,
+  login,
   selectCategories,
   selectEndpoints,
   selectEventbyID,
@@ -177,6 +178,20 @@ export const registerEvent = async (
     const { userId, eventId } = req.body;
     const updatedUser = await addEventToUser(userId, eventId);
     res.status(200).json(updatedUser);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const loginUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email, password } = req.body;
+    const jwtToken = await login(email, password);
+    res.status(201).json({ message: "Hello again!", token: jwtToken });
   } catch (err) {
     next(err);
   }

@@ -5,9 +5,28 @@ import { Event } from "../database/models/events";
 import { Location } from "../database/models/location";
 import { Category } from "../database/models/category";
 import { ParsedQs } from "qs";
+import jwt from "jsonwebtoken";
 
 export const selectEndpoints = async () => {
   return endpoints;
+};
+
+export const login = async (email: string, password: string) => {
+  const userExists = await User.findOne({ where: { email: email } });
+  // If the user does not exist, return a message
+  if (!userExists) {
+    throw new Error("Invalid username or password");
+  }
+  const passwordsMatch = await bcrypt.compare(password, userExists!.password);
+  if (!passwordsMatch) {
+    throw new Error("Invalid username or password");
+  }
+  const jwtToken = jwt.sign(
+    { id: userExists?.id, email: userExists?.email },
+    process.env.JWT_SECRET as string,
+    { expiresIn: "7d" }
+  );
+  return jwtToken;
 };
 
 export const selectUsers = async () => {
