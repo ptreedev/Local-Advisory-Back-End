@@ -177,3 +177,8 @@ export const addEventToUser = async (userId: string, eventId: string) => {
     console.log(err);
   }
 };
+
+export const selectUser = async (user: Express.User) => {
+  // const foundUser = await User.findOne({ where: { email: user } });
+  // return foundUser;
+};

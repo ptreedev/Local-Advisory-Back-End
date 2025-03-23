@@ -9,9 +9,11 @@ import {
   selectEventbyID,
   selectEvents,
   selectLocations,
+  selectUser,
   selectUsers,
   updateEvent,
 } from "../models/model";
+import { User } from "../database/models/user";
 
 export const getApi = async (
   req: Request,
@@ -195,4 +197,14 @@ export const loginUser = async (
   } catch (err) {
     next(err);
   }
+};
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const id = req.user?.id;
+  console.log(id);
+  // const foundUser = await selectUser(user);
+  res.status(200).json();
 };

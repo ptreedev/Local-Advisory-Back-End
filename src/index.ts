@@ -6,6 +6,7 @@ import {
   getEventByID,
   getEvents,
   getLocations,
+  getUser,
   getUsers,
   loginUser,
   patchEvent,
@@ -35,32 +36,12 @@ app.use(Express.json());
 app.get(
   "/api/user",
   passport.authenticate("jwt", { session: false }),
+  // getUser
   (req: Request, res: Response) => {
+    req.user?.id;
     res.send("authenticated");
   }
 );
-// async (req: Request, res: Response) => {
-//   const { email, password } = req.body;
-//   try {
-//     const userExists = await User.findOne({ where: { email: email } });
-//     // If the user does not exist, return a message
-//     if (!userExists) {
-//       res.status(422).json({ message: "Incorrect username or passsword" });
-//     }
-//     const passwordsMatch = await bcrypt.compare(password, userExists!.password);
-//     if (!passwordsMatch) {
-//       res.status(422).json({ message: "Incorrect username or passsword" });
-//     }
-//     const jwtToken = jwt.sign(
-//       { id: userExists?.id, email: userExists?.email },
-//       process.env.JWT_SECRET as string,
-//       { expiresIn: "7d" }
-//     );
-//     res.json({ message: "Hello again!", token: jwtToken });
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
 app.post("/api/login", loginUser);
 app.post("/api/register", postUser);
 
