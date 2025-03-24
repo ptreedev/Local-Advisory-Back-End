@@ -13,10 +13,6 @@ export const {
   DB_PASSWORD,
   DB_HOST,
   DB_DATABASE,
-<<<<<<< HEAD
-  DB_CONNECTION,
-  DB_STORAGE,
-=======
   TEST_DATABASE,
   DB_LOGGING,
   TEST_USERNAME,
@@ -24,5 +20,4 @@ export const {
   DB_CONNECTION,
   DB_STORAGE,
   JWT_SECRET,
->>>>>>> e186973df6c836f80a515b1c122b629adacf96d2
 } = { ...process.env } as { [key: string]: string };

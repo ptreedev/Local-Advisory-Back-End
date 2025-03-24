@@ -20,11 +20,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn src/server.ts",
-<<<<<<< HEAD
-    "test": "NODE_ENV=test jest --runInBand --detectOpenHandles"
-=======
     "test": "NODE_ENV=test jest --runInBand"
->>>>>>> e186973df6c836f80a515b1c122b629adacf96d2
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
