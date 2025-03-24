@@ -12,6 +12,7 @@ import {
   selectUser,
   selectUsers,
   updateEvent,
+  updateRole,
 } from "../models/model";
 import { User } from "../database/models/user";
 
@@ -203,8 +204,23 @@ export const getUser = async (
   res: Response,
   next: NextFunction
 ) => {
-  const id = req.user?.id;
-  console.log(id);
-  // const foundUser = await selectUser(user);
-  res.status(200).json();
+  try {
+    res.status(200).json(req.user);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const patchRole = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { userId, roleId } = req.body;
+    const patchedUser = await updateRole(userId, roleId);
+    res.status(200).json(patchedUser);
+  } catch (err) {
+    next(err);
+  }
 };

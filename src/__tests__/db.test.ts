@@ -5,6 +5,7 @@ import seedUsers from "../database/seeders/20250307152709-seed-users";
 import seedEvents from "../database/seeders/20250314101101-events";
 import seedCategories from "../database/seeders/20250313105814-categories";
 import seedLocations from "../database/seeders/20250313105547-locations";
+import seedRoles from "../database/seeders/20250324144246-roles";
 import endpoints from "../../endpoints.json";
 import { UserAttributes } from "../database/models/user";
 import { Event, EventAttributes } from "../database/models/events";
@@ -14,6 +15,10 @@ import { LocationAttributes } from "../database/models/location";
 beforeAll(async () => {
   try {
     await sequelizeConnection.sync({ force: true });
+    await seedRoles.up(
+      sequelizeConnection.getQueryInterface(),
+      sequelizeConnection
+    );
     await seedUsers.up(
       sequelizeConnection.getQueryInterface(),
       sequelizeConnection
@@ -56,6 +61,7 @@ describe("GET: /api/users", () => {
       .expect(200)
       .then(({ body }) => {
         body.forEach((user: UserAttributes) => {
+          console.log(user);
           expect(user).toMatchObject({
             id: expect.any(Number),
             firstName: expect.any(String),

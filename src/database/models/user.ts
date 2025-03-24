@@ -15,6 +15,7 @@ interface UserAttributes {
   email: string;
   password: string;
 
+  roleId?: number;
   id?: number;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -27,6 +28,7 @@ class User extends Model<UserAttributes> implements UserAttributes {
   public lastName!: string;
   public email!: string;
   public password!: string;
+  public roleId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
@@ -62,6 +64,9 @@ User.init(
     password: {
       allowNull: false,
       type: DataTypes.STRING,
+    },
+    roleId: {
+      type: DataTypes.INTEGER,
     },
     createdAt: {
       allowNull: true,
