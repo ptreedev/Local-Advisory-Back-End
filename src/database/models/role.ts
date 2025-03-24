@@ -2,7 +2,7 @@
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../connection";
 
-interface CategoryAttributes {
+interface RoleAttributes {
   name: string;
 
   id?: number;
@@ -10,7 +10,7 @@ interface CategoryAttributes {
   deletedAt?: Date;
   createdAt?: Date;
 }
-class Category extends Model<CategoryAttributes> implements CategoryAttributes {
+class Role extends Model<RoleAttributes> implements RoleAttributes {
   public name!: string;
   public id!: number;
 
@@ -18,7 +18,7 @@ class Category extends Model<CategoryAttributes> implements CategoryAttributes {
   public readonly updatedAt!: Date;
 }
 
-Category.init(
+Role.init(
   {
     id: {
       allowNull: false,
@@ -33,7 +33,7 @@ Category.init(
   },
   {
     sequelize: sequelizeConnection,
-    modelName: "Category",
+    modelName: "Role",
   }
 );
-export { Category, CategoryAttributes };
+export { Role, RoleAttributes };

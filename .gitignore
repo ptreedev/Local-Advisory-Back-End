@@ -1,0 +1,5 @@
+node_modules/
+.history/
+sequelize.sqlite
+.env
+.env.test
