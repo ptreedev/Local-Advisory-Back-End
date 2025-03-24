@@ -5,7 +5,7 @@ import seedUsers from "../database/seeders/20250307152709-seed-users";
 import seedEvents from "../database/seeders/20250314101101-events";
 import seedCategories from "../database/seeders/20250313105814-categories";
 import seedLocations from "../database/seeders/20250313105547-locations";
-import seedRoles from "../database/seeders/20250324144246-roles";
+import seedRoles from "../database/seeders/20250306144246-roles";
 import endpoints from "../../endpoints.json";
 import { UserAttributes } from "../database/models/user";
 import { Event, EventAttributes } from "../database/models/events";
