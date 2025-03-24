@@ -2,7 +2,6 @@
 
 import { DataTypes, Model } from "sequelize";
 import { sequelizeConnection } from "../connection";
-import Event from "./events";
 
 interface LocationAttributes {
   name: string;
@@ -69,4 +68,4 @@ Location.init(
   }
 );
 // Location.hasMany(Event);
-export default Location;
+export { Location, LocationAttributes };

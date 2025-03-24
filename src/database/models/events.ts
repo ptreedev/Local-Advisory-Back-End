@@ -6,8 +6,8 @@ import {
   NonAttribute,
 } from "sequelize";
 import { sequelizeConnection } from "../connection";
-import User from "./user";
-import Category from "./category";
+import { User } from "./user";
+import { Category } from "./category";
 
 interface EventAttributes {
   name: string;
@@ -65,7 +65,15 @@ Event.init(
       allowNull: false,
       type: DataTypes.STRING,
     },
+    image: {
+      allowNull: true,
+      type: DataTypes.STRING,
+    },
     dateFrom: {
+      allowNull: false,
+      type: DataTypes.DATE,
+    },
+    dateTo: {
       allowNull: false,
       type: DataTypes.DATE,
     },
@@ -73,13 +81,15 @@ Event.init(
       allowNull: false,
       type: DataTypes.DATE,
     },
-    ownerId: {
+    timeEnd: {
       allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.DATE,
+    },
+    ownerId: {
+      type: DataTypes.INTEGER,
     },
     locationId: {
-      allowNull: false,
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
     },
   },
   {
@@ -88,4 +98,4 @@ Event.init(
   }
 );
 
-export default Event;
+export { Event, EventAttributes };
