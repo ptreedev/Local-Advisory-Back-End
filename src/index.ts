@@ -36,10 +36,11 @@ app.use(Express.json());
 app.get(
   "/api/user",
   passport.authenticate("jwt", { session: false }),
-  // getUser
+// getUser,
   (req: Request, res: Response) => {
-    req.user?.id;
-    res.send("authenticated");
+    const user = req.user; 
+    console.log(user?.id); 
+    res.json(req.user);
   }
 );
 app.post("/api/login", loginUser);
