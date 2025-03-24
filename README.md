@@ -25,3 +25,16 @@ It implements the Seqeulize ORM and sqlite as the dev database. It also implemen
 `}`
 
 you can use these to either run the tests or use the api locally.
+
+7. To make calls to the api as an authorised user you can use either the staff account:
+   `{`\
+    ` "email": "staff@staff.com",` \
+    `"password": "staff"` \
+    `}`
+
+or the user account
+
+`{`\
+ `  "email": "user@user.com",` \
+ `  "password": "user"` \
+`}`
