@@ -78,25 +78,30 @@ export const createUser = async (
   email: string,
   password: string
 ) => {
-  if (
-    await User.findOne({
-      where: { email: email },
-    })
-  ) {
-    const err = new Error(
-      "There was an unexpected error with that email, please try again"
-    );
-    err.name = "ValidationError";
-    throw err;
-  } else {
-    const hashedPassword: string = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: hashedPassword,
-    });
-    return newUser;
+  try {
+    if (
+      await User.findOne({
+        where: { email: email },
+      })
+    ) {
+      const err = new Error(
+        "There was an unexpected error with that email, please try again"
+      );
+      err.name = "ValidationError";
+      throw err;
+    } else {
+      const hashedPassword: string = await bcrypt.hash(password, 10);
+      const newUser = await User.create({
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: hashedPassword,
+        roleId: 2,
+      });
+      return newUser;
+    }
+  } catch (err) {
+    console.log(err);
   }
 };
 
@@ -178,6 +183,17 @@ export const addEventToUser = async (userId: string, eventId: string) => {
   }
 };
 
+export const updateRole = async (userId: string, roleId: string) => {
+  try {
+    const userById = await User.findOne({ where: { id: userId } });
+    userById!.roleId = Number(roleId);
+    await userById?.save();
+    await userById?.reload();
+    return userById;
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const selectUser = async (user: Express.User) => {
   // const foundUser = await User.findOne({ where: { email: user } });
   // return foundUser;

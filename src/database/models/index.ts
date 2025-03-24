@@ -2,10 +2,21 @@ import { Category } from "./category";
 import EventCategory from "./event-categories";
 import { Event } from "./events";
 import { Location } from "./location";
+import { Role } from "./role";
 import { User } from "./user";
 import UserEvent from "./user-event";
 
-Location.hasMany(Event,{
+Role.hasMany(User, {
+  foreignKey: "roleId",
+  as: "users",
+});
+
+User.belongsTo(Role, {
+  foreignKey: "roleId",
+  as: "roles",
+});
+
+Location.hasMany(Event, {
   foreignKey: "locationId",
   as: "events",
 });
